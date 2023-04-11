@@ -14,7 +14,7 @@ def fourier_transform(signal, sample_rate=44100, duration=5):
     return xf, yf
 
 
-def lir_filter(signal, f_cutoff, f_sampling, fbf=False):
+def iir_filter(signal, f_cutoff, f_sampling, fbf=False):
     b, a = iirfilter(4, Wn=f_cutoff, fs=f_sampling,
                      btype="low", ftype="butter")
     if not fbf:
