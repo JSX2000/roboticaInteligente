@@ -5,9 +5,9 @@ from playsound import playsound
 
 
 def audio_filter():
-    playsound("audios/Keepers.mp3")
+    playsound("audios/Keepers.wav")
 
-    sampFreq, sound = wavfile.read("audios/Keepers.mp3")
+    sampFreq, sound = wavfile.read("audios/Keepers.wav")
     print(sound.dtype, sampFreq)
 
     sound = sound / 2.0**15
@@ -38,3 +38,31 @@ def audio_filter():
     plt.show()
 
     fft_spectrum = np.fft.rfft(signal)
+    freq = np.fft.rfftfreq(signal.size, d=1.0 / sampFreq)
+    print("Fourier spectrum", fft_spectrum)
+    fft_spectrum_abs = np.abs(fft_spectrum)
+
+    plt.plot(freq, fft_spectrum_abs)
+    plt.xlabel("frequency, Hz")
+    plt.ylabel("Amplitude, units")
+    plt.show()
+
+    for i, f in enumerate(freq):
+        if f > 5900 and f < 6100:
+            fft_spectrum[i] = 0.0
+
+    noiseless_signal = np.fft.irfft(fft_spectrum)
+
+    plt.plot(time, noiseless_signal, "r")
+    plt.xlabel("time, signal")
+    plt.tight_layout()
+    plt.show()
+
+    wavfile.write("audios/Noisy_Audio.wav", sampFreq, signal)
+    wavfile.write("audios/Noiseless_Audio.wav", sampFreq, noiseless_signal)
+    playsound("audios/Noisy_Audio.wav")
+    playsound("audios/Noiseless_Audio.wav")
+
+
+if __name__ == "__main__":
+    audio_filter()
