@@ -2,7 +2,7 @@ from scipy.signal import kaiserord, lfilter, firwin, freqz, iirfilter, filtfilt
 from scipy.fft import fft, fftfreq
 from scipy.fftpack import fftshift
 
-
+#Transformada de Fourier
 def fourier_transform(signal, sample_rate=44100, duration=5):
     # Number of samples
     N = sample_rate * duration
@@ -12,7 +12,6 @@ def fourier_transform(signal, sample_rate=44100, duration=5):
     yf = fftshift(yf) # type: ignore
     xf = fftshift(xf)
     return xf, yf
-
 
 def iir_filter(signal, f_cutoff, f_sampling, fbf=False):
     b, a = iirfilter(4, Wn=f_cutoff, fs=f_sampling, btype="low", ftype="butter")
