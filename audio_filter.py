@@ -3,7 +3,6 @@ import numpy as np
 from scipy.io import wavfile
 from playsound import playsound
 
-
 def audio_filter():
     playsound("audios/Keepers.wav")
 

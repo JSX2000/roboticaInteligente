@@ -9,7 +9,7 @@ def fourier_transform(signal, sample_rate=44100, duration=5):
     yf = fft(signal)
     xf = fftfreq(N, 1 / sample_rate)
     # Ordered FFT
-    yf = fftshift(yf)
+    yf = fftshift(yf) # type: ignore
     xf = fftshift(xf)
     return xf, yf
 
@@ -30,7 +30,7 @@ def fir_filter(signal, nyq_rate, f_cutoff):
     ripple_db = 60.0
 
     N, beta = kaiserord(ripple_db, width)
-    taps = firwin(N, f_cutoff / nyq_rate, window=("kaiser", beta))
+    taps = firwin(N, f_cutoff / nyq_rate, window=("kaiser", beta)) # type: ignore
     filtered_x = lfilter(taps, 1.0, signal)
 
     return filtered_x, taps, N
